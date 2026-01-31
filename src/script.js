@@ -160,7 +160,7 @@ controls.enablePan = true
 controls.enableZoom = true
 
 controls.autoRotate = true
-controls.autoRotateSpeed = 0
+controls.autoRotateSpeed = 0.05
 
 /**
  * Renderer
