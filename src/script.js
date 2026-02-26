@@ -29,6 +29,7 @@ scene.background = new THREE.Color('#593F50')
 const textureLoader = new THREE.TextureLoader()
 const matcapTexture = textureLoader.load('/textures/matcaps/9.png')
 const matcapTexture2 = textureLoader.load('/textures/matcaps/10.png')
+const matcapTexture3 = textureLoader.load('/textures/matcaps/6.png')
 
 matcapTexture.encoding = THREE.sRGBEncoding
 
@@ -66,6 +67,64 @@ fontLoader.load(
         textMaterial.matcap = matcapTexture
         const text = new THREE.Mesh(textGeometry, textMaterial)
         scene.add(text)
+
+        
+
+        // add a second line of text below the main name using a different font if available
+        fontLoader.load(
+            '/fonts/Betania Patmos_Regular.json',
+            (font2) => {
+                const secondTextGeometry = new TextGeometry(
+                    'I am a creative developer and designer',
+                    {
+                        font: font2,
+                        size: 0.2,
+                        depth: 0.05,
+                        curveSegments: 5,
+                        bevelEnabled: true,
+                        bevelThickness: 0.02,
+                        bevelSize: 0.015,
+                        bevelOffset: 0,
+                        bevelSegments: 4
+                    }
+                )
+                secondTextGeometry.center()
+                const secondTextMaterial = new THREE.MeshMatcapMaterial()
+                secondTextMaterial.matcap = matcapTexture3
+                const secondText = new THREE.Mesh(secondTextGeometry, secondTextMaterial)
+                // move the second line slightly downward
+                secondText.position.y = -0.7
+                scene.add(secondText)
+
+                
+            },
+            undefined,
+            () => {
+                // fallback to original font if the alternate font isn't available
+                const secondTextGeometry = new TextGeometry(
+                    'I am a creative developer and designer',
+                    {
+                        font: font,
+                        size: 0.2,
+                        depth: 0.05,
+                        curveSegments: 5,
+                        bevelEnabled: true,
+                        bevelThickness: 0.02,
+                        bevelSize: 0.015,
+                        bevelOffset: 0,
+                        bevelSegments: 4
+                    }
+                )
+                secondTextGeometry.center()
+                const secondTextMaterial = new THREE.MeshMatcapMaterial()
+                secondTextMaterial.matcap = matcapTexture3
+                const secondText = new THREE.Mesh(secondTextGeometry, secondTextMaterial)
+                secondText.position.y = -0.7
+                scene.add(secondText)
+
+                
+            }
+        )
 
         const material = new THREE.MeshMatcapMaterial()
         material.matcap = matcapTexture2
@@ -178,7 +237,7 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
-    
+
     // Update controls
     controls.update()
 
